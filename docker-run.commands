@@ -1,0 +1,35 @@
+    Run with a Tag:
+        The docker run command allows you to specify a tag for the image you want to run.
+        Example: docker run image:tag
+        Replace image with the name of the image and tag with the specific version or tag you want to use.
+
+    Standard Inputs and Standard Outputs:
+        By default, Docker attaches the standard input (stdin), standard output (stdout), and standard error (stderr) to the terminal.
+        You can interact with the container using the terminal.
+        Example: docker run -it image (runs the container in interactive mode with a pseudo-terminal)
+
+    Interactive Mode with Pseudo Terminal:
+        The -it flag allows you to run a container in interactive mode with a pseudo-terminal.
+        This is commonly used for applications that require user input or for accessing an interactive shell inside the container.
+        Example: docker run -it image bash (runs a container in interactive mode with the bash shell)
+
+    Port Mapping:
+        Docker provides port mapping to expose container ports to the host system.
+        This allows accessing services running inside the container from the host machine or other devices on the network.
+        Example: docker run -p hostPort:containerPort image
+        Replace hostPort with the port number on the host and containerPort with the port number the container is listening on.
+
+    Volume Mapping:
+        Docker allows mapping directories or files on the host system to directories inside the container.
+        This is useful for persistent storage and sharing data between the host and the container.
+        Example: docker run -v hostPath:containerPath image
+        Replace hostPath with the path to the directory or file on the host and containerPath with the corresponding path inside the container.
+
+    Advanced Run Commands:
+        Docker run commands can be more advanced depending on the specific requirements of the application or image.
+        Example 1: Running Jenkins: docker run -p 8080:8080 -p 50000:50000 jenkins/jenkins
+            This command runs a Jenkins container, exposing ports 8080 and 50000 for web access and Jenkins agent communication.
+        Example 2: Running a MySQL container: docker run -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql:latest
+            This command runs a MySQL container, sets the root password, maps port 3306, and runs it in detached mode (-d).
+
+These examples showcase different aspects of the docker run command and illustrate how you can customize the container's behavior based on your specific needs.
