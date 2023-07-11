@@ -1,0 +1,58 @@
+Docker Storage
+
+Docker provides different mechanisms for managing storage within containers. Two commonly used approaches are bind mounting and volume mounting.
+Bind Mounting
+
+Bind mounting allows you to directly mount a directory or file from the host system into a container. This mechanism maps a specific path on the host to a path within the container. Any changes made to the files in the bind-mounted directory are immediately reflected in both the container and the host system.
+
+To perform bind mounting, you can use the -v or --volume flag in the docker run command. The syntax is as follows:
+
+shell
+
+docker run -v <host_path>:<container_path> ...
+
+    <host_path>: The path to the directory or file on the host system.
+    <container_path>: The path inside the container where the bind mount should be mounted.
+
+Volume Mounting
+
+Volume mounting provides a more flexible and Docker-managed approach to storage. Volumes are managed by Docker and can be easily shared and reused across multiple containers. Unlike bind mounts, volumes are not tied to the host's file system and offer additional features such as data persistence and easier data recovery.
+
+To perform volume mounting, you can use the -v or --volume flag in the docker run command. The syntax is as follows:
+
+shell
+
+docker run -v <volume_name>:<container_path> ...
+
+    <volume_name>: The name you want to assign to the volume.
+    <container_path>: The path inside the container where the volume should be mounted.
+
+Docker automatically creates the volume if it doesn't already exist and manages its lifecycle.
+Example Command
+
+Here's an example docker run command that demonstrates volume mounting in action while running a MySQL container:
+
+shell
+
+docker run -v /opt/data:/var/lib/mysql -d --name=mysql-db -e MYSQL_ROOT_PASSWORD=db_pass123 mysql
+
+    -v /opt/data:/var/lib/mysql: This binds the host directory /opt/data to the container directory /var/lib/mysql. Any changes made to the MySQL data within the container will be stored in /opt/data on the host system.
+    -d: Runs the container in detached mode (in the background).
+    --name=mysql-db: Assigns the name "mysql-db" to the container.
+    -e MYSQL_ROOT_PASSWORD=db_pass123: Sets the environment variable MYSQL_ROOT_PASSWORD to "db_pass123", which specifies the root password for the MySQL instance.
+    mysql: Specifies the name of the Docker image to run (in this case, the official MySQL image).
+
+sh.get-data.sh Script Explanation
+
+Assuming you have a shell script named sh.get-data.sh, it could be used to recover data from the MySQL container in the example above. Here's an explanation of the script:
+
+shell
+
+#!/bin/bash
+
+docker cp mysql-db:/var/lib/mysql /opt/backup
+
+    #!/bin/bash: This line specifies the script interpreter as bash.
+    docker cp mysql-db:/var/lib/mysql /opt/backup: This command uses the docker cp command to copy the MySQL data from the "mysql-db" container's /var/lib/mysql directory to the /opt/backup directory on the host system. This allows you to recover the data from the container and store it in a safe location.
+
+You can run the sh.get-data.sh script using bash sh.get-data.sh or ./sh.get-data.sh (after making it executable with chmod +x sh.get-data.sh).

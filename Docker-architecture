@@ -1,0 +1,42 @@
+# Docker Engine Architecture
+
+Docker Engine is an open-source containerization technology that allows you to package, distribute, and run applications within lightweight, isolated environments called containers. The architecture of Docker Engine consists of several key components working together to provide container management capabilities.
+
+## 1. Docker Client
+The Docker Client is a command-line interface (CLI) tool that allows users to interact with Docker through commands. It provides a convenient way to build, manage, and control Docker containers and images. The client communicates with the Docker Daemon to execute commands and manage container operations.
+
+## 2. Docker Daemon
+The Docker Daemon is a background service that runs on the host system and manages the container lifecycle. It listens for API requests from the Docker client and interacts with the underlying operating system to create and manage containers. The Docker Daemon utilizes various components for container isolation and management.
+
+### a. Namespaces
+Docker leverages Linux namespaces to provide process-level isolation for containers. Namespaces isolate containers' view of the system resources, such as process IDs, network interfaces, interprocess communication, and Unix timesharing. Each container has its own isolated namespace, ensuring separation and security.
+
+### b. Control Groups (cgroups)
+Control Groups (cgroups) are used by Docker to limit and allocate resources to containers. Cgroups allow fine-grained control over CPU, memory, disk I/O, and other resources. By utilizing cgroups, Docker ensures that containers operate within their resource limits and do not impact the overall system performance.
+
+### c. Union File System (UnionFS)
+Docker uses Union File System (UnionFS) to provide a layered approach to file system management within containers. UnionFS allows multiple file systems to be mounted together, creating a single unified view. Docker utilizes UnionFS to efficiently build and manage container images using layers.
+
+### d. Container Runtime
+The container runtime is responsible for executing and managing containers on the host system. Docker Engine supports various container runtimes, including the default runtime "containerd." The container runtime interacts with the underlying operating system and kernel to create and manage container processes.
+
+## 3. Docker Images
+Docker Images are read-only templates used to create containers. They contain the application code, runtime environment, libraries, and dependencies required to run an application. Images are built using a Dockerfile, which specifies the instructions for creating the image layer by layer. Docker images are stored in a registry, such as Docker Hub or a private registry.
+
+## 4. Docker Container
+A Docker Container is a lightweight, standalone, and executable package that encapsulates an application along with its dependencies. Containers are created from Docker images and run in isolated environments. Each container has its own file system, processes, network interfaces, and resource allocations. Containers are portable and can be easily moved between different environments.
+
+## 5. Docker Networking
+Docker provides networking capabilities to enable communication between containers and between containers and the host system. It offers various network drivers and networking modes to facilitate connectivity and isolation. Docker supports bridged networks, overlay networks, host networks, and more.
+
+## 6. Docker Volumes
+Docker Volumes are used for persistent data storage in containers. They provide a way to share data between containers, as well as between the host and containers. Volumes can be managed and attached to containers, ensuring that data is preserved even if the container is restarted or removed.
+
+## 7. Docker REST API
+Docker exposes a RESTful API that allows programmatic interaction with Docker Engine. The API enables developers to control and manage Docker resources programmatically. It provides endpoints to manage containers, images, networks, volumes, and other Docker components.
+
+This architecture overview provides a high-level understanding of the key components in Docker Engine, including the command-line interface, REST API, Docker Daemon, namespaces, and key concepts like networking and volumes. It highlights the foundational elements that make Docker an efficient and powerful containerization technology.
+
+For more detailed information and advanced features, it is recommended to refer to the official Docker documentation.
+
+
