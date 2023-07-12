@@ -1,0 +1,33 @@
+Docker Registry is a service that stores and manages Docker images. It acts as a central repository where Docker images can be pushed, pulled, and shared across different environments. Private registries allow organizations to have their own secure and controlled repositories.
+
+To work with Docker Registry, I started by running a registry using the "registry:2" image. The registry was given the name "my-registry" and exposed on host port 5000, with a restart policy set to "always." The command used was:
+docker run -d -p 5000:5000 --restart=always --name my-registry registry:2
+
+Next, I pushed two images, "nginx:latest" and "httpd:latest," to the registry. To begin, I pulled the images from their respective sources using the commands:
+docker pull nginx:latest and docker pull httpd:latest
+
+To push these images to our registry, I tagged them with the registry address and repository name. For example, for the "nginx:latest" image:
+docker image tag nginx:latest localhost:5000/nginx:latest
+and then pushed it to the registry using:
+docker push localhost:5000/nginx:latest
+
+The same steps were repeated for the "httpd:latest" image. First, tag the image with the registry address and repository name:
+docker image tag httpd:latest localhost:5000/httpd:latest
+then push it to the registry:
+docker push localhost:5000/httpd:latest
+
+After pushing the images, I removed any dangling (unused) images from the local system using the command:
+docker image prune -a
+
+To verify the list of images pushed to the registry, I used the command:
+curl -X GET localhost:5000/v2/_catalog
+
+To pull images from our registry, we utilized the command:
+docker pull localhost:5000/nginx
+
+Finally, to stop and remove the registry container, the following commands were executed:
+docker stop my-registry
+and
+docker rm my-registry
+
+By following these steps, I effectively worked with Docker Registry, running a private registry, pushing and pulling images, and managing the container and image lifecycle.

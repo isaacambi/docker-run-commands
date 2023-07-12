@@ -1,0 +1,15 @@
+Here's a concise summary of my work on Docker Networking,:
+
+    Identify networks: docker network ls
+    Identify container network: docker inspect alpine-1
+    Identify subnet on bridge network: docker network inspect bridge
+    Run a container named "alpine-2" using the Alpine image and attach it to the "none" network:
+    docker run -d --name=alpine-2 --network=none alpine
+    Create a new network named "wp-mysql-network" using the "bridge" driver, allocate subnet 182.18.0.1/24, and configure the gateway to 182.18.0.1:
+    docker network create --driver bridge --subnet 182.18.0.1/24 --gateway 182.18.0.1 wp-mysql-network
+    Deploy a MySQL database using the mysql:5.6 image, name it "mysql-db," and attach it to the "wp-mysql-network" network. Set the database password to "db-pass123" using the MYSQL_ROOT_PASSWORD environment variable:
+    docker run -d --name=mysql-db --network wp-mysql-network -e MYSQL_ROOT_PASSWORD=db-pass123 mysql:5.6
+    Deploy a web application named "webapp" using the kodekloud/simple-webapp-mysql image. Expose port 38080 on the host. The application requires the DB_Host environment variable set to "mysql-db" and DB_Password set to "db-pass123." Attach it to the "wp-mysql-network" network:
+    docker run -d --name=webapp -e DB_Host=mysql-db -e DB_Password=db-pass123 --network wp-mysql-network -p 38080:80 kodekloud/simple-webapp-mysql
+
+These commands represent the steps I took to work on Docker Networking, including identifying networks and container networks, creating and attaching containers to networks, and configuring network settings for proper communication between containers.
